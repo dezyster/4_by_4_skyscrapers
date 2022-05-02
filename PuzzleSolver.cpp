@@ -12,7 +12,7 @@ int PuzzleSolver::getOpositeClue(int clue) // returns clue position from another
     }
 }
 
-void PuzzleSolver::fillPossibleCombinations(std::vector<std::array<int, 4>> &possibleCombinations, std::vector<std::array<int, 2>> &viewedFromSides)
+void PuzzleSolver::fillPossibleCombinations(std::vector<std::array<int, 4>> &possibleCombinations)
 {
     for(int a{1}; a < 5; ++a)
     {
@@ -28,37 +28,7 @@ void PuzzleSolver::fillPossibleCombinations(std::vector<std::array<int, 4>> &pos
                         {
                             if(d != c && d != b && d != a)
                             {
-                                std::array<int, 4> combination{ {a,b,c,d} };
-                                possibleCombinations.push_back( combination );
-
-                                auto calculateViewedFromSide
-                                {
-                                    [](std::array<int, 4> comb)
-                                    {
-                                        int viewedFromSide = 1;
-
-                                        int height = comb[0];
-
-                                        for(int i{0}; i < 3; ++i)
-                                        {
-                                            if(comb[i+1] > height)
-                                            {
-                                                viewedFromSide++;
-                                                height = comb[i+1];
-                                            }
-                                        }
-
-                                        return viewedFromSide;
-                                    }
-                                };
-
-                                int viewedFromLeft { calculateViewedFromSide(combination) };
-
-                                std::reverse(combination.begin(), combination.end()); // reverse combination to calculate from another side
-
-                                int viewedFromRight{ calculateViewedFromSide(combination) };
-
-                                viewedFromSides.push_back( {viewedFromLeft, viewedFromRight} );
+                                possibleCombinations.push_back( {a,b,c,d} );
                             }
                         }
                     }
@@ -68,12 +38,54 @@ void PuzzleSolver::fillPossibleCombinations(std::vector<std::array<int, 4>> &pos
     }
 }
 
+std::vector<std::array<int, 2>> PuzzleSolver::calculateViewedFromSides(const std::vector<std::array<int, 4>> &possibleCombinations)
+{
+    std::vector<std::array<int, 2>> viewedFromSides{};
+
+    auto calculateViewedFromSide
+    {
+        [](const std::array<int, 4> &comb)
+        {
+            int viewedFromSide = 1;
+
+            int height = comb[0];
+
+            for(int i{0}; i < 3; ++i)
+            {
+                if(comb[i+1] > height)
+                {
+                    viewedFromSide++;
+                    height = comb[i+1];
+                }
+            }
+
+            return viewedFromSide;
+        }
+    };
+
+    for(const auto &it: possibleCombinations)
+    {
+        auto combination = it;
+
+        int viewedFromLeft { calculateViewedFromSide(combination) };
+
+        std::reverse(combination.begin(), combination.end()); // reverse combination to calculate from another side
+
+        int viewedFromRight{ calculateViewedFromSide(combination) };
+
+        viewedFromSides.push_back( {viewedFromLeft, viewedFromRight} );
+    }
+
+    return viewedFromSides;
+}
+
 void PuzzleSolver::fillCombinationsThatCanWork()
 {
     std::vector<std::array<int, 4>> possibleCombinations{}; // will contain all possible combinations
-    std::vector<std::array<int, 2>> viewedFromSides{}; // will contain all info about how many building can be viewed from both sides
 
-    fillPossibleCombinations(possibleCombinations, viewedFromSides);
+    fillPossibleCombinations(possibleCombinations);
+
+    const auto &viewedFromSides{ calculateViewedFromSides(possibleCombinations) }; // will contain all info about how many building can be viewed from both sides
 
     for(int i{0}; i < 8; ++i)
     {

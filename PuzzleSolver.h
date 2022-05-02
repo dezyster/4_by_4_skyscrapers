@@ -16,7 +16,8 @@ class PuzzleSolver
 
     int getOpositeClue(int);
 
-    void fillPossibleCombinations(std::vector<std::array<int, 4>>&, std::vector<std::array<int, 2>>&);
+    void fillPossibleCombinations(std::vector<std::array<int, 4>>&);
+    std::vector<std::array<int, 2>> calculateViewedFromSides(const std::vector<std::array<int, 4>>&);
 
     void fillCombinationsThatCanWork();
 
