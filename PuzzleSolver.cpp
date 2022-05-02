@@ -304,7 +304,7 @@ void PuzzleSolver::fillFieldWithCombinations(int &wcIt,  bool &isFound)
             {
                 const auto previousState = m_field; // save current state of field
 
-                bool neddsToContinue{ putCombinationsOnField(wcIt, it, isFound) }; // puts working combination and decides if loop is needs to continue
+                bool neddsToContinue{ putCombinationsOnField(wcIt, it, isFound) }; // puts working combination and decides if loop needs to continue
 
                 if(neddsToContinue)
                 {
