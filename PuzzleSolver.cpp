@@ -44,7 +44,7 @@ std::vector<std::array<int, 2>> PuzzleSolver::calculateViewedFromSides(const std
 
     auto calculateViewedFromSide
     {
-        [](const std::array<int, 4> &comb)
+        [](const std::array<int, 4> &comb) -> int
         {
             int viewedFromSide = 1;
 
