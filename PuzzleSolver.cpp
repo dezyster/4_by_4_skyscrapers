@@ -256,7 +256,7 @@ void PuzzleSolver::tryToFinalize(bool &isFound) // checks if all applied combina
 }
 
 bool PuzzleSolver::putCombinationsOnField(const int &wcIt, const std::array<int,4> &wc, bool &isFound)
-// puts working combinations combinations on field and checks if there are any conflicts or end is reached
+// puts working combinations on field and checks if there are any conflicts or end is reached
 {
     if(wcIt < 4)
     {
