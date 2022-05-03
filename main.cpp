@@ -55,7 +55,8 @@ int outcomes[][4][4] = {
   { 1, 3, 2, 4 } },
 };
 
-bool equal (int **puzzle, int expected[4][4]) {
+bool equal(int **puzzle, int expected[4][4])
+{
   if (!puzzle || !expected) return 0;
   for (int i = 0; i < 4; ++i) if (memcmp (puzzle[i], expected[i], 4*sizeof (int))) return false;
   return true;

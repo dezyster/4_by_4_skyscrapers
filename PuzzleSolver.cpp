@@ -131,7 +131,7 @@ bool PuzzleSolver::checkFieldCorrectness()
 
     for(int i{0}; i < 4; ++i)
     {
-        if(!isAllUnique(m_field[i])) // checks if all rows lines are unique
+        if(!(isAllUnique(m_field[i]))) // checks if all rows lines are unique
         {
             return false;
         }
@@ -139,7 +139,7 @@ bool PuzzleSolver::checkFieldCorrectness()
 
     for(int i{0}; i < 4; ++i)
     {
-        if(!isAllUnique( { m_field[0][i], m_field[1][i], m_field[2][i], m_field[3][i] } )) // checks if all columns are unique
+        if(!(isAllUnique( { m_field[0][i], m_field[1][i], m_field[2][i], m_field[3][i] } ))) // checks if all columns are unique
         {
             return false;
         }
